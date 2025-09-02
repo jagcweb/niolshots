@@ -86,6 +86,7 @@ TournamentApiService.prototype.getBackupTournaments = function() {
     { id: "2955", name: "LigaPro Serie A, Primera Etapa", slug: "ligapro", country: "Ecuador", countryCode: "EC" }
   ];
 };
+
 // Método para proporcionar torneos de respaldo
 TournamentApiService.prototype.getBackupTournaments = function() {
   // Torneos populares como respaldo
@@ -109,11 +110,16 @@ function MatchApiService() {
   this.proxyUrl = "https://corsproxy.io/?";
   this.matchesBaseUrl = "https://www.sofascore.com/api/v1/sport/football/scheduled-events";
   this.matchBaseUrl = "https://www.sofascore.com/api/v1/event";
+
+    this.useLocalData = false;
+    this.cachedMatches = {};
+    this.cachedMatchDetails = {};
 }
 
 MatchApiService.prototype.getMatches = async function(date) {
   try {
-    const url = `${this.proxyUrl}${this.matchesBaseUrl}/${date}`;
+    const targetUrl = `${this.matchesBaseUrl}/${date}`;
+    const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
     const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"events":[]}');
@@ -125,7 +131,8 @@ MatchApiService.prototype.getMatches = async function(date) {
 
 MatchApiService.prototype.getMatch = async function(matchId) {
   try {
-    const url = `${this.proxyUrl}${this.matchBaseUrl}/${matchId}`;
+    const targetUrl = `${this.proxyUrl}${this.matchBaseUrl}/${matchId}`;
+    const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
     const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"event":{}}');
@@ -200,7 +207,8 @@ StatsApiService.prototype.getShots = async function(matchId) {
 };
 
 StatsApiService.prototype.getPlayerStats = async function(matchId) {
-  const url = `${this.proxyUrl}${this.baseUrl}/${matchId}/lineups`;
+  const targetUrl = `${this.proxyUrl}${this.baseUrl}/${matchId}/lineups`;
+  const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
   try {
     const response = await fetch(url);
     const jsonString = await response.text();
@@ -323,7 +331,8 @@ StatsApiService.prototype.getPlayerFoulsFromStats = async function(matchId) {
 
 StatsApiService.prototype.getMatchIncidents = async function(matchId) {
   try {
-    const url = `${this.proxyUrl}${this.baseUrl}/${matchId}/incidents`;
+    const targetUrl = `${this.proxyUrl}${this.baseUrl}/${matchId}/incidents`;
+    const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
     const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"incidents":[]}');
