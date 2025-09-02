@@ -97,32 +97,24 @@ function createShotsAndGoalsList(container, shots, homeColor, awayColor) {
     
     switch ((shot.shotType || "").toLowerCase()) {
       case "goal":
-        shotTypeText = "Gol";
-        shotIcon = "⚽";
-        break;
+      shotTypeText = "Gol";
+      shotIcon = "⚽";
+      break;
       case "ontarget":
       case "on_target":
       case "save":
-        shotTypeText = "Tiro a puerta";
-        shotIcon = "🎯";
-        break;
-      case "blocked":
-        shotTypeText = "Bloqueado";
-        shotIcon = "🛑";
-        break;
-      case "post":
-        shotTypeText = "Al poste";
-        shotIcon = "🥅";
-        break;
+      shotTypeText = "Tiro a puerta";
+      shotIcon = "🎯";
+      break;
       case "miss":
       case "offtarget":
       case "off_target":
-        shotTypeText = "Fuera";
-        shotIcon = "❌";
-        break;
+      shotTypeText = "Tiro fuera";
+      shotIcon = "❌";
+      break;
       default:
-        shotTypeText = "Tiro";
-        shotIcon = "🦶";
+      shotTypeText = "Tiro fuera";
+      shotIcon = "❌";
     }
     
     // Determinar parte del cuerpo
