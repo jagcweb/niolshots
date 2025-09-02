@@ -1,36 +1,3 @@
-// Función para inicializar la aplicación - agregar a tu archivo principal
-function initMatchDetails() {
-  // Verificar si hay un ID de partido en la URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const matchId = urlParams.get('matchId');
-  
-  if (matchId) {
-    // Si hay un ID de partido, cargar los detalles
-    fetchMatchDetails(matchId).then(matchData => {
-      showMatchDetailView(matchData);
-    }).catch(error => {
-      console.error('Error al cargar los detalles del partido:', error);
-    });
-  } else {
-    // Si no hay ID, mostrar la vista principal (lista de partidos)
-    showMatchesList();
-  }
-}
-
-// Función para cargar los detalles del partido
-function fetchMatchDetails(matchId) {
-  // Implementar según tu API
-  return fetch(`/api/matches/${matchId}`)
-    .then(response => {
-      if (!response.ok) throw new Error('Error al cargar datos');
-      return response.json();
-    });
-}
-
-// Ejecutar cuando el DOM está listo
-document.addEventListener('DOMContentLoaded', initMatchDetails);
-
-
 // ==============================================
 // TOURNAMENT API SERVICE
 // ==============================================
