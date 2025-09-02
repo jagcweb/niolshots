@@ -24,7 +24,17 @@ TournamentApiService.prototype.getAllTournaments = async function() {
   try {
     console.log("Realizando solicitud a:", this.baseUrl);
     
-    const response = await fetch(this.baseUrl);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        'Referer': 'https://www.sofascore.com/',
+        'Origin': 'https://www.sofascore.com'
+      }
+    };
+
+    const response = await fetch(this.baseUrl, options);
     console.log("Estado de respuesta:", response.status);
     
     if (!response.ok) {
@@ -120,7 +130,16 @@ MatchApiService.prototype.getMatches = async function(date) {
   try {
     const targetUrl = `${this.matchesBaseUrl}/${date}`;
     const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
-    const response = await fetch(url);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        'Referer': 'https://www.sofascore.com/',
+        'Origin': 'https://www.sofascore.com'
+      }
+    };
+    const response = await fetch(url, options);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"events":[]}');
     return jsonObject.events || [];
@@ -133,7 +152,16 @@ MatchApiService.prototype.getMatch = async function(matchId) {
   try {
     const targetUrl = `${this.proxyUrl}${this.matchBaseUrl}/${matchId}`;
     const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
-    const response = await fetch(url);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        'Referer': 'https://www.sofascore.com/',
+        'Origin': 'https://www.sofascore.com'
+      }
+    };
+    const response = await fetch(url, options);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"event":{}}');
     return jsonObject.event;
@@ -154,7 +182,16 @@ StatsApiService.prototype.getShots = async function(matchId) {
   const shotsUrl = `${this.baseUrl}/${matchId}/shotmap`;
 
   try {
-    const response = await fetch(shotsUrl);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        'Referer': 'https://www.sofascore.com/',
+        'Origin': 'https://www.sofascore.com'
+      }
+    };
+    const response = await fetch(shotsUrl, options);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{}');
     const shotArray = jsonObject.shotmap || [];
@@ -210,7 +247,16 @@ StatsApiService.prototype.getPlayerStats = async function(matchId) {
   const targetUrl = `${this.proxyUrl}${this.baseUrl}/${matchId}/lineups`;
   const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
   try {
-    const response = await fetch(url);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        'Referer': 'https://www.sofascore.com/',
+        'Origin': 'https://www.sofascore.com'
+      }
+    };
+    const response = await fetch(url, options);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{}');
     const playersStats = [];
@@ -333,7 +379,16 @@ StatsApiService.prototype.getMatchIncidents = async function(matchId) {
   try {
     const targetUrl = `${this.proxyUrl}${this.baseUrl}/${matchId}/incidents`;
     const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
-    const response = await fetch(url);
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        'Referer': 'https://www.sofascore.com/',
+        'Origin': 'https://www.sofascore.com'
+      }
+    };
+    const response = await fetch(url, options);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"incidents":[]}');
     return jsonObject.incidents || [];
