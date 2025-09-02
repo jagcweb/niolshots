@@ -108,6 +108,11 @@ TournamentApiService.prototype.getBackupTournaments = function() {
 function MatchApiService() {
   this.matchesBaseUrl = "https://www.sofascore.com/api/v1/sport/football/scheduled-events";
   this.matchBaseUrl = "https://www.sofascore.com/api/v1/event";
+
+  this.useLocalData = true;
+  this.proxyUrl = ""; 
+  this.cachedMatches = {};
+  this.cachedMatchDetails = {};
 }
 
 MatchApiService.prototype.getMatches = async function(date) {
