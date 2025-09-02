@@ -106,18 +106,14 @@ TournamentApiService.prototype.getBackupTournaments = function() {
 // MATCH API SERVICE
 // ==============================================
 function MatchApiService() {
+  this.proxyUrl = "https://corsproxy.io/?";
   this.matchesBaseUrl = "https://www.sofascore.com/api/v1/sport/football/scheduled-events";
   this.matchBaseUrl = "https://www.sofascore.com/api/v1/event";
-
-  this.useLocalData = true;
-  this.proxyUrl = ""; 
-  this.cachedMatches = {};
-  this.cachedMatchDetails = {};
 }
 
 MatchApiService.prototype.getMatches = async function(date) {
   try {
-    const url = `${this.matchesBaseUrl}/${date}`;
+    const url = `${this.proxyUrl}${this.matchesBaseUrl}/${date}`;
     const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"events":[]}');
@@ -129,7 +125,7 @@ MatchApiService.prototype.getMatches = async function(date) {
 
 MatchApiService.prototype.getMatch = async function(matchId) {
   try {
-    const url = `${this.matchBaseUrl}/${matchId}`;
+    const url = `${this.proxyUrl}${this.matchBaseUrl}/${matchId}`;
     const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"event":{}}');
@@ -204,7 +200,7 @@ StatsApiService.prototype.getShots = async function(matchId) {
 };
 
 StatsApiService.prototype.getPlayerStats = async function(matchId) {
-  const url = `${this.baseUrl}/${matchId}/lineups`;
+  const url = `${this.proxyUrl}${this.baseUrl}/${matchId}/lineups`;
   try {
     const response = await fetch(url);
     const jsonString = await response.text();
@@ -327,7 +323,7 @@ StatsApiService.prototype.getPlayerFoulsFromStats = async function(matchId) {
 
 StatsApiService.prototype.getMatchIncidents = async function(matchId) {
   try {
-    const url = `${this.baseUrl}/${matchId}/incidents`;
+    const url = `${this.proxyUrl}${this.baseUrl}/${matchId}/incidents`;
     const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"incidents":[]}');
