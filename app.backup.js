@@ -117,7 +117,7 @@ TournamentApiService.prototype.getBackupTournaments = function() {
 // MATCH API SERVICE
 // ==============================================
 function MatchApiService() {
-  this.proxyUrl = "https://corsproxy.io/?";
+  this.proxyUrl = "https://api.allorigins.win/raw?url=";
   this.matchesBaseUrl = "https://www.sofascore.com/api/v1/sport/football/scheduled-events";
   this.matchBaseUrl = "https://www.sofascore.com/api/v1/event";
 
