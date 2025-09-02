@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NiolShots - Estadísticas de fútbol en tiempo real</title>
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/openclipart/openclipart.github.io@master/cliparts/500px/svg/Soccerball.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="event-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <i class="fas fa-futbol logo-icon"></i>
+                <h1>NiolShots</h1>
+            </div>
+            <div class="date-selector">
+                <button id="prev-date" class="date-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                <span id="current-date">Cargando fecha...</span>
+                <button id="next-date" class="date-nav-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="user-actions">
+                <button id="clear-cache-btn" class="action-btn" title="Limpiar caché">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button id="refresh-btn" class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                <button id="settings-btn" class="action-btn"><i class="fas fa-cog"></i></button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Side Navigation (Tournaments) -->
+            <aside class="sidebar" id="tournaments-sidebar">
+                <div class="sidebar-header">
+                    <h2>Torneos</h2>
+                    <input type="text" id="tournament-search" placeholder="Buscar torneo...">
+                </div>
+                <div class="tournament-list" id="tournament-list">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Cargando torneos...</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main View (Matches) -->
+            <section class="content-area">
+                <!-- Matches View -->
+                <div id="matches-view" class="view active">
+                    <div class="matches-header">
+                        <h2>Partidos de hoy</h2>
+                        <div class="match-filters">
+                            <button class="filter-btn active" data-filter="all">Todos</button>
+                            <button class="filter-btn" data-filter="live">En directo</button>
+                            <button class="filter-btn" data-filter="upcoming">Próximos</button>
+                            <button class="filter-btn" data-filter="finished">Finalizados</button>
+                        </div>
+                    </div>
+                    
+                    <div class="matches-container" id="matches-container">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Cargando partidos...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Match Detail View (hidden by default) -->
+                <div id="match-detail-view" class="view">
+                    <div class="match-detail-header">
+                        <button id="back-to-matches" class="back-btn">
+                            <i class="fas fa-arrow-left"></i> Volver a partidos
+                        </button>
+                        <h2 id="match-title">Detalles del partido</h2>
+                    </div>
+                    
+                    <div class="match-info-container" id="match-info">
+                        <div class="match-scoreboard">
+                            <div class="team home-team">
+                                <div class="team-logo home-logo"></div>
+                                <h3 class="team-name home-name">Equipo Local</h3>
+                                <div class="score home-score">0</div>
+                            </div>
+                            <div class="match-status">
+                                <div class="match-time">00:00</div>
+                                <div class="match-state">En curso</div>
+                            </div>
+                            <div class="team away-team">
+                                <div class="score away-score">0</div>
+                                <h3 class="team-name away-name">Equipo Visitante</h3>
+                                <div class="team-logo away-logo"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="match-tabs">
+                            <button class="tab-btn active" data-tab="stats">Estadísticas</button>
+                            <button class="tab-btn" data-tab="shots">Est. Individuales</button>
+                            <!--<button class="tab-btn" data-tab="events">Eventos</button>-->
+                            <button class="tab-btn" data-tab="lineup">Alineaciones</button>
+                        </div>
+                        
+                        <div class="tab-content" id="tab-stats">
+                            <div class="stats-comparison">
+                                <div class="loading-spinner">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>Cargando estadísticas...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="tab-shots" style="display: none;">
+                            <div class="pitch-container">
+                                <div class="pitch">
+                                    <!-- Shots will be rendered here as markers -->
+                                </div>
+                                <div class="shot-list">
+                                    <!-- List of shots with details -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="tab-events" style="display: none;">
+                            <div class="match-timeline">
+                                <!-- Timeline of events like goals, cards, substitutions -->
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="tab-lineup" style="display: none;">
+                            <div class="lineups-container">
+                                <div class="team-lineup home-lineup">
+                                    <!-- Home team lineup -->
+                                </div>
+                                <div class="team-lineup away-lineup">
+                                    <!-- Away team lineup -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 NiolShots - Datos proporcionados por SofaScore API</p>
+            <div class="footer-links">
+                <a href="#">Términos y condiciones</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Contacto</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script unificado sin módulos -->
+    <script src="event-components.js"></script>
+    <script src="repositories.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
