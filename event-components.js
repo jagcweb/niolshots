@@ -23,8 +23,11 @@ function createShotsAndGoalsList(container, shots, homeColor, awayColor) {
   }
 
   // Establecer variables CSS para colores de equipo
-  document.documentElement.style.setProperty('--home-color', homeColor);
-  document.documentElement.style.setProperty('--away-color', awayColor);
+  const safeHomeColor = (homeColor && homeColor.toLowerCase() === '#fff' || homeColor.toLowerCase() === '#ffffff' || homeColor.toLowerCase() === 'white') ? '#000' : homeColor;
+  const safeAwayColor = (awayColor && awayColor.toLowerCase() === '#fff' || awayColor.toLowerCase() === '#ffffff' || awayColor.toLowerCase() === 'white') ? '#000' : awayColor;
+
+  document.documentElement.style.setProperty('--home-color', safeHomeColor);
+  document.documentElement.style.setProperty('--away-color', safeAwayColor);
 
   // Ordenar por tiempo descendente (más reciente primero)
   const sortedShots = [...shots].sort((a, b) => b.time - a.time);
@@ -290,8 +293,11 @@ function createFoulsAndCardsList(container, fouls, homeColor, awayColor) {
   }
 
   // Establecer variables CSS para colores de equipo
-  document.documentElement.style.setProperty('--home-color', homeColor);
-  document.documentElement.style.setProperty('--away-color', awayColor);
+  const safeHomeColor = (homeColor && homeColor.toLowerCase() === '#fff' || homeColor.toLowerCase() === '#ffffff' || homeColor.toLowerCase() === 'white') ? '#000' : homeColor;
+  const safeAwayColor = (awayColor && awayColor.toLowerCase() === '#fff' || awayColor.toLowerCase() === '#ffffff' || awayColor.toLowerCase() === 'white') ? '#000' : awayColor;
+
+  document.documentElement.style.setProperty('--home-color', safeHomeColor);
+  document.documentElement.style.setProperty('--away-color', safeAwayColor);
 
   // Ordenar por tiempo descendente (más reciente primero)
   const sortedFouls = [...fouls].sort((a, b) => b.time - a.time);
@@ -491,8 +497,11 @@ function createSavesList(container, saves, homeColor, awayColor) {
   }
 
   // Establecer variables CSS para colores de equipo
-  document.documentElement.style.setProperty('--home-color', homeColor);
-  document.documentElement.style.setProperty('--away-color', awayColor);
+  const safeHomeColor = (homeColor && homeColor.toLowerCase() === '#fff' || homeColor.toLowerCase() === '#ffffff' || homeColor.toLowerCase() === 'white') ? '#000' : homeColor;
+  const safeAwayColor = (awayColor && awayColor.toLowerCase() === '#fff' || awayColor.toLowerCase() === '#ffffff' || awayColor.toLowerCase() === 'white') ? '#000' : awayColor;
+
+  document.documentElement.style.setProperty('--home-color', safeHomeColor);
+  document.documentElement.style.setProperty('--away-color', safeAwayColor);
 
   // Ordenar por tiempo descendente (más reciente primero)
   const sortedSaves = [...saves].sort((a, b) => b.time - a.time);
@@ -673,8 +682,12 @@ function setupEventsComponent(tabContent, matchSummary, homeColor, awayColor) {
   const eventsContainer = document.getElementById('events-container');
 
   // Establecer variables CSS para colores de equipo
-  document.documentElement.style.setProperty('--home-color', homeColor);
-  document.documentElement.style.setProperty('--away-color', awayColor);
+  // Si el color es blanco, usar negro en su lugar
+  const safeHomeColor = (homeColor && homeColor.toLowerCase() === '#fff' || homeColor.toLowerCase() === '#ffffff' || homeColor.toLowerCase() === 'white') ? '#000' : homeColor;
+  const safeAwayColor = (awayColor && awayColor.toLowerCase() === '#fff' || awayColor.toLowerCase() === '#ffffff' || awayColor.toLowerCase() === 'white') ? '#000' : awayColor;
+
+  document.documentElement.style.setProperty('--home-color', safeHomeColor);
+  document.documentElement.style.setProperty('--away-color', safeAwayColor);
 
   // Verificar si hay un tipo de evento guardado en la URL
   const urlParams = new URLSearchParams(window.location.search);

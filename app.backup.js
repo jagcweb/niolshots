@@ -24,17 +24,7 @@ TournamentApiService.prototype.getAllTournaments = async function() {
   try {
     console.log("Realizando solicitud a:", this.baseUrl);
     
-    const options = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-        'Referer': 'https://www.sofascore.com/',
-        'Origin': 'https://www.sofascore.com'
-      }
-    };
-
-    const response = await fetch(this.baseUrl, options);
+    const response = await fetch(this.baseUrl);
     console.log("Estado de respuesta:", response.status);
     
     if (!response.ok) {
@@ -96,7 +86,6 @@ TournamentApiService.prototype.getBackupTournaments = function() {
     { id: "2955", name: "LigaPro Serie A, Primera Etapa", slug: "ligapro", country: "Ecuador", countryCode: "EC" }
   ];
 };
-
 // Método para proporcionar torneos de respaldo
 TournamentApiService.prototype.getBackupTournaments = function() {
   // Torneos populares como respaldo
@@ -117,29 +106,14 @@ TournamentApiService.prototype.getBackupTournaments = function() {
 // MATCH API SERVICE
 // ==============================================
 function MatchApiService() {
-  this.proxyUrl = "https://api.allorigins.win/raw?url=";
   this.matchesBaseUrl = "https://www.sofascore.com/api/v1/sport/football/scheduled-events";
   this.matchBaseUrl = "https://www.sofascore.com/api/v1/event";
-
-    this.useLocalData = false;
-    this.cachedMatches = {};
-    this.cachedMatchDetails = {};
 }
 
 MatchApiService.prototype.getMatches = async function(date) {
   try {
-    const targetUrl = `${this.matchesBaseUrl}/${date}`;
-    const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
-    const options = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-        'Referer': 'https://www.sofascore.com/',
-        'Origin': 'https://www.sofascore.com'
-      }
-    };
-    const response = await fetch(url, options);
+    const url = `${this.matchesBaseUrl}/${date}`;
+    const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"events":[]}');
     return jsonObject.events || [];
@@ -150,18 +124,8 @@ MatchApiService.prototype.getMatches = async function(date) {
 
 MatchApiService.prototype.getMatch = async function(matchId) {
   try {
-    const targetUrl = `${this.proxyUrl}${this.matchBaseUrl}/${matchId}`;
-    const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
-    const options = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-        'Referer': 'https://www.sofascore.com/',
-        'Origin': 'https://www.sofascore.com'
-      }
-    };
-    const response = await fetch(url, options);
+    const url = `${this.matchBaseUrl}/${matchId}`;
+    const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"event":{}}');
     return jsonObject.event;
@@ -182,16 +146,7 @@ StatsApiService.prototype.getShots = async function(matchId) {
   const shotsUrl = `${this.baseUrl}/${matchId}/shotmap`;
 
   try {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-        'Referer': 'https://www.sofascore.com/',
-        'Origin': 'https://www.sofascore.com'
-      }
-    };
-    const response = await fetch(shotsUrl, options);
+    const response = await fetch(shotsUrl);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{}');
     const shotArray = jsonObject.shotmap || [];
@@ -244,19 +199,9 @@ StatsApiService.prototype.getShots = async function(matchId) {
 };
 
 StatsApiService.prototype.getPlayerStats = async function(matchId) {
-  const targetUrl = `${this.proxyUrl}${this.baseUrl}/${matchId}/lineups`;
-  const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
+  const url = `${this.baseUrl}/${matchId}/lineups`;
   try {
-    const options = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-        'Referer': 'https://www.sofascore.com/',
-        'Origin': 'https://www.sofascore.com'
-      }
-    };
-    const response = await fetch(url, options);
+    const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{}');
     const playersStats = [];
@@ -377,18 +322,8 @@ StatsApiService.prototype.getPlayerFoulsFromStats = async function(matchId) {
 
 StatsApiService.prototype.getMatchIncidents = async function(matchId) {
   try {
-    const targetUrl = `${this.proxyUrl}${this.baseUrl}/${matchId}/incidents`;
-    const url = `${this.proxyUrl}${encodeURIComponent(targetUrl)}`;
-    const options = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
-        'Referer': 'https://www.sofascore.com/',
-        'Origin': 'https://www.sofascore.com'
-      }
-    };
-    const response = await fetch(url, options);
+    const url = `${this.baseUrl}/${matchId}/incidents`;
+    const response = await fetch(url);
     const jsonString = await response.text();
     const jsonObject = JSON.parse(jsonString || '{"incidents":[]}');
     return jsonObject.incidents || [];
